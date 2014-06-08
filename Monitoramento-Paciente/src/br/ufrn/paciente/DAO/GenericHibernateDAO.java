@@ -37,7 +37,7 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable>
 
 			try {
 				getInstance().getTransaction().begin();
-				saved = getInstance().merge(entity);
+				getInstance().persist(entity);
 				getInstance().getTransaction().commit();
 			} catch (Exception e) {
 				throw new DAOException(e.getMessage());
@@ -52,7 +52,22 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable>
 
 	@Override
 	public T update(T entity) throws DAOException {
-		return save(entity);
+		try {
+			T saved = null;
+
+			try {
+				getInstance().getTransaction().begin();
+				saved = getInstance().merge(entity);
+				getInstance().getTransaction().commit();
+			} catch (Exception e) {
+				throw new DAOException(e.getMessage());
+			}
+			return saved;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override

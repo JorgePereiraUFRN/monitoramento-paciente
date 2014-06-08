@@ -5,7 +5,6 @@ import java.util.Calendar;
 import br.ufrn.paciente.DAO.DAOFactory;
 import br.ufrn.paciente.DAO.EventoDaoInterface;
 import br.ufrn.paciente.DAO.HibernateDAOFactory;
-import br.ufrn.paciente.DAO.PacienteDAO;
 import br.ufrn.paciente.DAO.PacienteDAOInterface;
 import br.ufrn.paciente.exceptions.ComunicationException;
 import br.ufrn.paciente.exceptions.ControllerException;
@@ -22,10 +21,10 @@ public class PacienteController {
 	private static final DAOFactory daoFactory = new HibernateDAOFactory();
 	private static final PacienteDAOInterface pacienteDAO = daoFactory
 			.getPacienteDAO();
-	private static final EventoDaoInterface eventoDAO = daoFactory
+	private EventoDaoInterface eventoDAO = daoFactory
 			.getEventoDAO();
 
-	private static final String uriHub = "http://localhost:8080/hub/";
+	private static final String uriHub = "http://localhost:8080/hub/hub/";
 
 	private static final String QTD_SORO = "qtdSoro", PRESSAO = "pressao",
 			BATIMENTOS = "batimentos";
