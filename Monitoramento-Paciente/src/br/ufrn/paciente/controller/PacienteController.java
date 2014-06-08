@@ -25,7 +25,7 @@ public class PacienteController {
 	private static final EventoDaoInterface eventoDAO = daoFactory
 			.getEventoDAO();
 
-	private static final String uriHub = "";
+	private static final String uriHub = "http://localhost:8080/hub/";
 
 	private static final String QTD_SORO = "qtdSoro", PRESSAO = "pressao",
 			BATIMENTOS = "batimentos";
