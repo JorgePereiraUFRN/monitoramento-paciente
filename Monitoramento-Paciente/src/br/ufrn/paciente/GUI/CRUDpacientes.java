@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
  */
 public class CRUDpacientes extends javax.swing.JFrame {
 
-	private PacienteController pacienteController = new PacienteController();
+	private PacienteController pacienteController;
 	private Paciente paciente = new Paciente();
 
 	private int oldPressao = 10;
@@ -31,6 +31,11 @@ public class CRUDpacientes extends javax.swing.JFrame {
 	public CRUDpacientes() {
 		initComponents();
 		setLocationRelativeTo(null);
+		try {
+			pacienteController = new PacienteController();
+		} catch (ControllerException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@SuppressWarnings("unchecked")

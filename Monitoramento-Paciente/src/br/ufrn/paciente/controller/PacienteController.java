@@ -28,6 +28,22 @@ public class PacienteController {
 
 	private static final String QTD_SORO = "qtdSoro", PRESSAO = "pressao",
 			BATIMENTOS = "batimentos";
+	
+	private final Publish publishNewPaciente = new Publish("Novo-Paciente", uriHub);
+	
+	
+	public PacienteController() throws ControllerException {
+		
+			try {
+				publishNewPaciente.createTopic();
+			} catch (ComunicationException e) {
+				throw new ControllerException(e.getMessage());
+			} catch (TopicAlreadyExistsException e) {
+				//nada a fazer
+			}
+		
+	}
+	
 
 	private boolean ValidarPaciente(Paciente p) throws ObjetoNuloException,
 			ValorInvalidoException {
@@ -143,11 +159,14 @@ public class PacienteController {
 	public void cadastrarPaciente(Paciente p) throws ControllerException {
 		try {
 			if (ValidarPaciente(p)) {
+				
 				pacienteDAO.save(p);
 
 				Publish publish = new Publish(p.getIdTopico(), uriHub);
 
 				publish.createTopic();
+				
+				publishNewPaciente.publish(p.getIdTopico());
 
 			}
 		} catch (ObjetoNuloException | ValorInvalidoException e) {
